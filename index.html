@@ -68,14 +68,19 @@
             #form{
                 display: none;
             }
-
+            #error{
+                text-align: center;
+                color: red;
+                font-size: 40px;
+                margin: 10px auto;
+            }
         </style>
     </head>
     <body>
         <div id="main"><h1>Online Shop Yoshiko Merchs</h1>
             <div id="block">
             
-            <img class="pic" src="./04844-6cj8Tc_5Nzw.jpg" alt="Yoshiko">
+            <img class="pic" src="../images/ava2.jpg" alt="Yoshiko">
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam in porro quo consequuntur expedita quidem incidunt, recusandae repellat officiis aperiam nisi quibusdam, provident exercitationem delectus quasi inventore! Mollitia, architecto temporibus?</p>
             <button id="buy">Buy</button>
         <br></div>
@@ -84,6 +89,7 @@
             <input type="text" placeholder="your name" id="user_name">
             <input type="text" placeholder="your email" id="user_email">
             <input type="text" placeholder="your phone" id="user_phone">
+            <div id="error"></div>
             <button id="confirm">Confirm</button>
         </form></div>
 
@@ -104,6 +110,31 @@
             });
 
             confirm.addEventListener('click', () => {
+                document.getElementById("error").innerText = '';
+                let name = document.getElementById('user_name').value;
+                let email = document.getElementById('user_email').value;
+                let phone = document.getElementById('user_phone').value;
+
+                if(name.length < 1) {
+                    document.getElementById("error").innerText = "Error in field name";
+                    return;
+                }
+                if(email.length < 5){
+                    document.getElementById("error").innerText = "Error in field email";
+                    return;
+                }
+                if(phone.length < 11){
+                    document.getElementById("error").innerText = "Error in field phone";
+                    return;
+                }
+                
+                let dataSend = {
+                    name: name,
+                    email: email,
+                    phone: phone
+                }
+                tg.sendData(JSON.stringify(dataSend));
+
                 tg.close();
             });
         </script>
